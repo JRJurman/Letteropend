@@ -71,7 +71,12 @@ def get_total_minutes(uris)
   uris.each_with_index do |path, index|
     start_statement(path, index, uris.size)
     page = Net::HTTP.get("letterboxd.com", path)
-    catches = page.match(/\D*(\d+) mins\D*/).captures
+    cat = page.match(/\D*(\d+) mins\D*/)
+    if (cat != nil)
+      catches = cat.captures
+    else
+      catches = []
+    end
     if (catches.size != 1)
       error_statement(nil)
     else
