@@ -87,5 +87,7 @@ def get_total_minutes(uris)
   #======= END PROGRAM ========#
 end
 
-urls = get_film_urls("jrjurman")
+print "Enter username: "
+un = gets().chomp
+urls = get_film_urls(un)
 get_total_minutes(urls)
