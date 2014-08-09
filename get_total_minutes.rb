@@ -1,49 +1,6 @@
 require 'net/http'
 require 'colorize'
 
-def get_film_urls(username)
-
-  #==== CONSOLE STATEMENTS ====#
-  def start_statement(u) 
-    puts "Grabbing film URLs for ".light_yellow + u.yellow.bold
-  end
-  def another_page_statement(p)
-    puts "Found another page".light_yellow + " (page #{p})".magenta.bold
-  end
-  def end_page_statement
-    puts "No more pages".magenta
-  end
-  def error_statement(e)
-    puts "something probably went wrong getting the film urls".red
-  end
-  #== END CONSOLE STATEMENTS ==#
-
-  #========= PROGRAM ==========#
-  start_statement(username)
-  urls = []
-  page_number = "1"
-  begin
-    page = Net::HTTP.get("letterboxd.com", "/#{username}/films/page/#{page_number}/")
-    catches = page.scan(/href="(\/film\/\S*)"/).flatten
-    if (catches.size == 0)
-      error_statement(nil)
-    else
-      urls.push(*catches)
-    end
-
-    # check for another page (stupid pagination)
-    nex = page.scan(/a class="paginate-next" href="(\S*)"/).flatten
-    if (nex.size == 1)
-      page_number = nex[0].match(/(\d+)/).to_s
-      another_page_statement(page_number)
-    else
-      end_page_statement
-    end
-  end while (nex.size == 1)
-  #======= END PROGRAM ========#
-  return urls
-end
-
 def get_total_minutes(uris)
   #==== CONSOLE STATEMENTS ====#
   def start_statement(p, i, t) 
@@ -86,8 +43,3 @@ def get_total_minutes(uris)
   end
   #======= END PROGRAM ========#
 end
-
-print "Enter username: "
-un = gets().chomp
-urls = get_film_urls(un)
-get_total_minutes(urls)
