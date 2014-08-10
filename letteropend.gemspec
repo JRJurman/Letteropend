@@ -6,11 +6,10 @@ require 'letteropend/version'
 Gem::Specification.new do |spec|
   spec.name          = "letteropend"
   spec.version       = Letteropend::VERSION
-  spec.authors       = ["Nicolas McCurdy"]
-  spec.email         = ["thenickperson@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.authors       = ["Jesse Jurman"]
+  spec.email         = ["jrjurman@gmail.com"]
+  spec.summary       = "Scripts and Functions that let you peek at letterboxd films."
+  spec.homepage      = "https://github.com/JRJurman/Letteropend"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
