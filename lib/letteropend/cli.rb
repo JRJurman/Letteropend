@@ -9,8 +9,8 @@ module Letteropend
       # print "Films username: "
       # print "Watchlist username: "
 
-      user1_films = get_film_urls(user1, "films")
-      user2_watchlist = get_film_urls(user2, "watchlist")
+      user1_films = Letteropend.get_film_urls(user1, "films")
+      user2_watchlist = Letteropend.get_film_urls(user2, "watchlist")
 
       user2_watchlist.delete_if { |film| !user1_films.include? film }
       puts user2_watchlist
@@ -21,8 +21,8 @@ module Letteropend
       # print "First username: "
       # print "Second username: "
 
-      user1_wl = get_film_urls(user1, "watchlist")
-      user2_wl = get_film_urls(user2, "watchlist")
+      user1_wl = Letteropend.get_film_urls(user1, "watchlist")
+      user2_wl = Letteropend.get_film_urls(user2, "watchlist")
 
       user2_wl.delete_if { |film| !user1_wl.include? film }
       puts user2_wl
@@ -32,8 +32,8 @@ module Letteropend
     def get_all_time(user)
       # print "Enter username: "
 
-      urls = get_film_urls(user)
-      get_total_minutes(urls)
+      urls = Letteropend.get_film_urls(user)
+      Letteropend.get_total_minutes(urls)
     end
   end
 end
