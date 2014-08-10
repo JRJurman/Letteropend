@@ -1,4 +1,4 @@
-Copyright (c) 2014 Nicolas McCurdy
+Copyright (c) 2014 Jesse Jurman
 
 MIT License
 
