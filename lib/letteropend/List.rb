@@ -29,7 +29,7 @@ class List
       end
 
       # see if there is a next page
-      next_page = page.css('.paginate-next')[0]
+      next_page = page.css('a.paginate-next')[0]
       if ( next_page )
         @pages.push( next_page.attr("href") )
       end
