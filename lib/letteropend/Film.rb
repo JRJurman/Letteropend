@@ -4,4 +4,8 @@ class Film
     @title = title
     @url = url
   end
+
+  def ==(film)
+    @title == film.title and @url == film.url
+  end
 end

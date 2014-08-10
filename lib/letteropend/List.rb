@@ -1,6 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
-require './Film.rb'
+require_relative './Film.rb'
 
 class List
   attr_reader :username, :list, :films, :pages

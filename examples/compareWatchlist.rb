@@ -1,15 +1,30 @@
-require "colorize"
-require "net/http"
-require "./get_film_urls.rb"
+begin
+  require "colorize"
+rescue LoadError
+  puts "we won't judge, but if you want pretty colors, you should totally install colorize"
+  class String
+    def method_missing(method_id)
+      return self
+    end
+  end
+end
+require "../lib/letteropend/List.rb"
+=begin
 
+callbacks = {
+  :new_page => lambda{ |list| puts "Getting page ".light_yellow + list.pages.length.to_s.magenta + " from ".light_yellow + "#{list.username}'s #{list.list}".magenta }
+}
 print "First username: "
 user1 = gets.chomp
 
 print "Second username: "
 user2 = gets.chomp
 
-user1_wl = get_film_urls(user1, "watchlist")
-user2_wl = get_film_urls(user2, "watchlist")
+user1_wl = List.new(user1, "watchlist", callbacks)
+user2_wl = List.new(user2, "watchlist", callbacks)
 
-user2_wl.delete_if { |film| !user1_wl.include? film }
-puts user2_wl
+user2_wl.films.delete_if { |film| !user1_wl.films.include? film }
+user2_wl.films.each do |film|
+  puts film.title.blue
+end
+=end
