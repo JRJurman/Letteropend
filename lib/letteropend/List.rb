@@ -22,17 +22,27 @@ class List
       page.css(".poster").each do |film|
         title = film.css(".frame-title").text
         url = film.css("a")[0].attr("href")
-        @films.push( Film.new(title, url) )
+        @films.push( Film.new(title, url, callbacks) )
         if callbacks[:new_film]
           callbacks[:new_film].call(self)
         end
       end
 
       # see if there is a next page
-      next_page = page.css('.paginate-next')[0].attr("href")
+      next_page = page.css('.paginate-next')[0]
       if ( next_page )
-        @pages.push( next_page )
+        @pages.push( next_page.attr("href") )
       end
     end while ( next_page )
   end
+  
+  def get_total_time
+    total_runtime = 0
+    @films.each do |film|
+      puts film.runtime
+      total_runtime += film.runtime
+    end
+    return total_runtime
+  end
+
 end
