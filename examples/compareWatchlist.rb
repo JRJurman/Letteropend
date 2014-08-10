@@ -2,14 +2,22 @@ begin
   require "colorize"
 rescue LoadError
   puts "we won't judge, but if you want pretty colors, you should totally install colorize"
+
   class String
-    def method_missing(method_id)
-      return self
+    # I can't method missing... halp
+    def light_yellow
+      self
+    end
+    def magenta
+      self
+    end
+    def blue
+      self
     end
   end
+
 end
 require "../lib/letteropend/List.rb"
-=begin
 
 callbacks = {
   :new_page => lambda{ |list| puts "Getting page ".light_yellow + list.pages.length.to_s.magenta + " from ".light_yellow + "#{list.username}'s #{list.list}".magenta }
@@ -27,4 +35,3 @@ user2_wl.films.delete_if { |film| !user1_wl.films.include? film }
 user2_wl.films.each do |film|
   puts film.title.blue
 end
-=end
