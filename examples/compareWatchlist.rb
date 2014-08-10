@@ -17,7 +17,7 @@ rescue LoadError
   end
 
 end
-require "../lib/letteropend/List.rb"
+require_relative "../lib/letteropend/List.rb"
 
 callbacks = {
   :new_page => lambda{ |list| puts "Getting page ".light_yellow + list.pages.length.to_s.magenta + " from ".light_yellow + "#{list.username}'s #{list.list}".magenta }

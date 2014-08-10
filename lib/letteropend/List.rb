@@ -39,7 +39,6 @@ class List
   def get_total_time
     total_runtime = 0
     @films.each do |film|
-      puts film.runtime
       total_runtime += film.runtime
     end
     return total_runtime
