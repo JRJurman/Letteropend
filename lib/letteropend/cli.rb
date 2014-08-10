@@ -1,5 +1,22 @@
 require 'thor'
-require "colorize"
+begin
+  require "colorize"
+rescue LoadError
+  puts "we won't judge, but if you want pretty colors, you should totally install colorize"
+
+  class String
+    # I can't method missing... halp
+    def light_yellow
+      self
+    end
+    def magenta
+      self
+    end
+    def blue
+      self
+    end
+  end
+end
 require "net/http"
 
 module Letteropend
@@ -21,19 +38,32 @@ module Letteropend
       # print "First username: "
       # print "Second username: "
 
-      user1_wl = Letteropend.get_film_urls(user1, "watchlist")
-      user2_wl = Letteropend.get_film_urls(user2, "watchlist")
+      callbacks = {
+        :new_page => lambda{ |list| puts "Getting page ".light_yellow + list.pages.length.to_s.magenta + " from ".light_yellow + "#{list.username}'s #{list.list}".magenta }
+      }
 
-      user2_wl.delete_if { |film| !user1_wl.include? film }
-      puts user2_wl
+      user1_wl = List.new(user1, "watchlist", callbacks)
+      user2_wl = List.new(user2, "watchlist", callbacks)
+
+      user2_wl.films.delete_if { |film| !user1_wl.films.include? film }
+      user2_wl.films.each do |film|
+        puts film.title.blue
+      end
     end
 
-    desc 'get_all_time user', ''
-    def get_all_time(user)
+    desc 'get_all_time user list', ''
+    def get_all_time(user, list)
       # print "Enter username: "
+      # print "Enter list: "
 
-      urls = Letteropend.get_film_urls(user)
-      Letteropend.get_total_minutes(urls)
+      callbacks = {
+        :new_page => lambda{|l| puts "pulling data from #{l.pages.last}"},
+        :pulling_film => lambda{|f| puts "pulling data from #{f.url}"}}
+
+      l = List.new(user, list, callbacks)
+      total = l.get_total_time
+
+      puts "Total Runtime: #{total}"
     end
   end
 end

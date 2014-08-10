@@ -1,6 +1,7 @@
 require 'net/http'
 require 'colorize'
 require "letteropend/cli"
+require "letteropend/List.rb"
 require "letteropend/version"
 
 module Letteropend
