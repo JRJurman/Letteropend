@@ -4,7 +4,7 @@ require "net/http"
 
 module Letteropend
   class CLI < Thor
-    desc 'compare_watched_with_watchlist user1 user2', ''
+    desc 'compare_watched_with_watchlist USER1 USER2', ''
     def compare_watched_with_watchlist(user1, user2)
       # print "Films username: "
       # print "Watchlist username: "
@@ -16,7 +16,7 @@ module Letteropend
       puts user2_watchlist
     end
 
-    desc 'compare_watchlist user1 user2', ''
+    desc 'compare_watchlist USER1 USER2', ''
     def compare_watchlist(user1, user2)
       # print "First username: "
       # print "Second username: "
@@ -34,7 +34,7 @@ module Letteropend
       end
     end
 
-    desc 'get_all_time user list', ''
+    desc 'get_all_time USER LIST', ''
     def get_all_time(user, list)
       # print "Enter username: "
       # print "Enter list: "
