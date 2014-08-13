@@ -1,6 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
-require_relative './Film'
+require_relative './film'
 
 module Letteropend
   class List
