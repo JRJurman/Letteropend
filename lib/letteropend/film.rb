@@ -3,7 +3,7 @@ require "open-uri"
 
 module Letteropend
   class Film
-    attr_reader :title, :url, :runtime, :tagline
+    attr_reader :title, :url, :runtime, :tagline, :overview
     def initialize(title, url, callbacks={})
       @title = title
       @url = url
@@ -25,6 +25,13 @@ module Letteropend
       @tagline
     end
   
+    def overview
+      if !@pulled
+        pull_data
+      end
+      @overview
+    end
+
     def pull_data
       if @callbacks[:pulling_film]
         @callbacks[:pulling_film].call(self)
@@ -44,6 +51,9 @@ module Letteropend
 
       # get the tagline for the film
       @tagline = page.css(".tagline").text
+
+      # get the overview for the film
+      @overview = page.css("div.truncate").text.strip
   
       if @callbacks[:pulled_film]
         @callbacks[:pulled_film].call(self)

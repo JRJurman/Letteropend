@@ -9,3 +9,6 @@ puts "#{title}'s runtime is: #{runtime} minutes"
 
 tagline = f.tagline
 puts "#{title}'s tagline is: #{tagline}"
+
+overview = f.overview
+puts "#{title}'s overview is: #{overview}"
