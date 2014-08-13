@@ -1,30 +1,4 @@
-begin
-  require "colorize"
-rescue LoadError
-  puts "we won't judge, but if you want pretty colors, you should totally install colorize"
-  class String
-    # I can't method missing... halp
-    def blue
-      self
-    end
-    def cyan
-      self
-    end
-    def bold
-      self
-    end
-    def yellow
-      self
-    end
-    def magenta
-      self
-    end
-    def underline
-      self
-    end
-  end
-
-end
+require "colorize"
 require_relative "../lib/letteropend/List.rb"
 
 print "Enter username: "
@@ -54,7 +28,7 @@ callbacks = {
   :pulled_film => lambda{ |f| Object.send(:pulled_film, f) }
 }
 
-l = List.new(un, ul, callbacks)
+l = Letteropend::List.new(un, ul, callbacks)
 total = l.get_total_time
 
 puts "Total Runtime: #{total}".blue
