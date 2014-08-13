@@ -4,7 +4,7 @@ require "open-uri"
 module Letteropend
   class Film
     attr_reader :title, :url, :runtime
-    def initialize(title, url, callbacks)
+    def initialize(title, url, callbacks={})
       @title = title
       @url = url
       @pulled = false

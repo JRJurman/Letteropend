@@ -1,5 +1,6 @@
+# This example requires colorize
 require "colorize"
-require_relative "../lib/letteropend/List.rb"
+require_relative "../lib/letteropend"
 
 print "Enter username: "
 un = gets().chomp

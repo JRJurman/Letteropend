@@ -1,3 +1,4 @@
+# This example requires colorize
 require "colorize"
 require_relative "../lib/letteropend"
 
