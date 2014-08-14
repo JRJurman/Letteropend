@@ -1,6 +1,10 @@
 LetterOpend
 ===========
 
+[![Gem Version](https://badge.fury.io/rb/letteropend.svg)](http://badge.fury.io/rb/letteropend)
+[![Dependency Status](https://gemnasium.com/JRJurman/Letteropend.svg)](https://gemnasium.com/JRJurman/Letteropend)
+[![Code Climate](https://codeclimate.com/github/JRJurman/Letteropend/badges/gpa.svg)](https://codeclimate.com/github/JRJurman/Letteropend)
+
 Scripts and Functions that let you peek at letterboxd films.
 
 Sadly, with no API publicly available, this is a quick-hack way of exposing the films that you and your friends have seen, listed, or watchlisted on letterboxd.com
