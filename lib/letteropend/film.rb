@@ -3,6 +3,7 @@ require "open-uri"
 
 module Letteropend
   class Film
+    attr_reader :url
     def initialize(url, details={}, callbacks={})
       @url = url
       @pulled = false
