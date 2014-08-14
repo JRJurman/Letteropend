@@ -5,6 +5,7 @@ LetterOpend
 [![Build Status](https://travis-ci.org/JRJurman/Letteropend.svg?branch=master)](https://travis-ci.org/JRJurman/Letteropend)
 [![Dependency Status](https://gemnasium.com/JRJurman/Letteropend.svg)](https://gemnasium.com/JRJurman/Letteropend)
 [![Code Climate](https://codeclimate.com/github/JRJurman/Letteropend/badges/gpa.svg)](https://codeclimate.com/github/JRJurman/Letteropend)
+[![Test Coverage](https://codeclimate.com/github/JRJurman/Letteropend/badges/coverage.svg)](https://codeclimate.com/github/JRJurman/Letteropend)
 
 Scripts and Functions that let you peek at letterboxd films.
 
