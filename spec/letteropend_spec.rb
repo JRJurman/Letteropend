@@ -4,8 +4,12 @@ describe Letteropend do
   it 'has a version number' do
     expect(Letteropend::VERSION).not_to be nil
   end
+end
 
-  it 'does something useful' do
-    expect(false).to eq(true)
-  end
+describe Letteropend::Film do
+  it 'has tests'
+end
+
+describe Letteropend::List do
+  it 'has tests'
 end
