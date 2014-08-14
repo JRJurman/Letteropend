@@ -2,6 +2,7 @@ LetterOpend
 ===========
 
 [![Gem Version](https://badge.fury.io/rb/letteropend.svg)](http://badge.fury.io/rb/letteropend)
+[![Build Status](https://travis-ci.org/JRJurman/Letteropend.svg?branch=master)](https://travis-ci.org/JRJurman/Letteropend)
 [![Dependency Status](https://gemnasium.com/JRJurman/Letteropend.svg)](https://gemnasium.com/JRJurman/Letteropend)
 [![Code Climate](https://codeclimate.com/github/JRJurman/Letteropend/badges/gpa.svg)](https://codeclimate.com/github/JRJurman/Letteropend)
 
