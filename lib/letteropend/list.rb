@@ -23,7 +23,7 @@ module Letteropend
         page.css(".poster").each do |film|
           title = film.css(".frame-title").text
           url = film.css("a")[0].attr("href")
-          @films.push( Film.new(title, url, callbacks) )
+          @films.push( Film.new(url, {:title=>title}, callbacks) )
           if callbacks[:new_film]
             callbacks[:new_film].call(self)
           end
