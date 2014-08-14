@@ -7,6 +7,9 @@ Sadly, with no API publicly available, this is a quick-hack way of exposing the 
 
 This is not associated with letterboxd, nor is it guaranteed to work once an official API is released
 
+Installation
+------------
+
 Add this line to your application's Gemfile:
 
 ```ruby
@@ -21,7 +24,8 @@ Or install it yourself as:
 
     $ gem install letteropend
 
-## Contributing
+Contributing
+------------
 
 1. Fork it ( https://github.com/jrjurman/letteropend/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
