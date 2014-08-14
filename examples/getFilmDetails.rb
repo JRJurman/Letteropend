@@ -1,14 +1,30 @@
 require_relative "../lib/letteropend"
 
-title = "Chopping Mall"
+alert = {
+  :pulling_film => proc{ puts "PULLING NOW!" }
+}
+
 url = "/film/chopping-mall/"
-f = Letteropend::Film.new(title, url)
+a = Letteropend::Film.new(url, {}, alert)
 
-runtime = f.runtime
-puts "#{title}'s runtime is: #{runtime} minutes"
+url = "/film/ghostbusters/"
+b = Letteropend::Film.new(url, {:title=>"The Real Ghostbusters", :runtime=>107}, alert)
 
-tagline = f.tagline
-puts "#{title}'s tagline is: #{tagline}"
+def we_got_movie_sign(movie)
+  puts "The title is : #{movie.title}"
+  
+  runtime = movie.runtime
+  puts "#{movie.title}'s runtime is: #{movie.runtime} minutes"
+  
+  tagline = movie.tagline
+  puts "#{movie.title}'s tagline is: #{movie.tagline}"
+  
+  overview = movie.overview
+  puts "#{movie.title}'s overview is: #{movie.overview}"
+  puts "\n\n"
+end
 
-overview = f.overview
-puts "#{title}'s overview is: #{overview}"
+we_got_movie_sign(a)
+we_got_movie_sign(b)
+
+
