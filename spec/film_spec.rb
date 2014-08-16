@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Letteropend::Film do
+describe Letteropend::Film, vcr: { cassette_name: 'film' } do
   let(:film) { Letteropend::Film.new 'Chopping Mall', '/film/chopping-mall/' }
 
   describe '.new' do
