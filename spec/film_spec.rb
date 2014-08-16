@@ -9,22 +9,22 @@ describe Letteropend::Film do
   end
 
   describe '#runtime' do
-    it 'has tests'
+    it
   end
 
   describe '#tagline' do
-    it 'has tests'
+    it
   end
 
   describe '#overview' do
-    it 'has tests'
+    it
   end
 
   describe '#pull_data' do
-    it 'has tests'
+    it
   end
 
   describe '#==' do
-    it 'has tests'
+    it
   end
 end
