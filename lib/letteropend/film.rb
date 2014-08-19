@@ -53,6 +53,9 @@ module Letteropend
       end
     end
 
+    # Method to declare class events
+    #
+    # @param events - block of user defined events
     def self.config(&events)
       if block_given?
         class_eval(&events)
@@ -73,6 +76,7 @@ module Letteropend
       end
     end
 
+    # Goes to Letterboxd and pulls html page with nokogiri
     def pull_data
       @pulling = true
 
@@ -108,10 +112,15 @@ module Letteropend
       model_updated
     end
   
+    # Equivalence operator
     def ==(film)
       @url == film.url
     end
 
+    # Method Missing implementation
+    #
+    # @param sym - method trying to be called
+    # @param args - arguments passed into the method call
     def method_missing(sym, *args)
       if (@@valid_attributes.include? sym)
         if !@pulled and !@pulling
