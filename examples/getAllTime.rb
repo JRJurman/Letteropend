@@ -19,13 +19,21 @@ def pulled_film(film)
   end
 end
 
-callbacks = {
-  :new_page => lambda{ |l| puts "pulling data from {#{l.pages.last}}" },
-  :pulling_film => lambda{ |f| puts "pulling data from {#{f.url}}" },
-  :pulled_film => lambda{ |f| Object.send(:pulled_film, f) }
-}
+Letteropend::Film.config do
+  on :model_updating do
+    puts "pulling data from {#{url}}"
+  end
+  on :model_updated do
+    Object.send(:pulled_film, self)
+  end
+end
 
-l = Letteropend::List.new(un, ul, callbacks)
+l = Letteropend::List.new(un, ul) do 
+  on :new_page do
+    puts "pulling data from {#{pages.last}}"
+  end
+end
+
 total = l.get_total_time
 
 puts "Total Runtime: #{total} minutes"
