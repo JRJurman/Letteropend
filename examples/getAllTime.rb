@@ -34,6 +34,9 @@ l = Letteropend::List.new(un, ul) do
   end
 end
 
-total = l.get_total_time
+total = 0
+l.films.each do |film|
+  total += film.runtime
+end
 
 puts "Total Runtime: #{total} minutes"

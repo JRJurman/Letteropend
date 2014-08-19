@@ -3,10 +3,16 @@ require 'open-uri'
 require_relative './film'
 
 module Letteropend
+  # The List class
   class List
     attr_reader :username, :list, :films, :pages
     @@valid_events = [:new_page, :new_film]
   
+    # Created a new list instance
+    #
+    # @param username - the username for the list
+    # @param list - name of list, defaults to "films" (watched movies)
+    # @param events - block of user defined events
     def initialize(username, list="films", &events) 
       @username = username
       @list = list
@@ -77,14 +83,6 @@ module Letteropend
           puts "Error: trying to assign invalid class event | Letteropend::List, event: #{event}"
         end
       end
-    end
-
-    def get_total_time
-      total_runtime = 0
-      @films.each do |film|
-        total_runtime += film.runtime
-      end
-      return total_runtime
     end
 
     def method_missing(sym, *args)
