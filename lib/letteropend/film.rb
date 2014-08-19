@@ -2,26 +2,84 @@ require "nokogiri"
 require "open-uri"
 
 module Letteropend
+  # The Film class
   class Film
     attr_reader :url
-    def initialize(url, details={}, callbacks={})
+    @@valid_attributes = [:title, :tagline, :overview, :runtime]
+    @@valid_events = [:model_updated, :model_updating]
+
+    # Creates a new film instance
+    #
+    # @param url - the url letterboxd assigns the film
+    # @param details - the attributes the user assigns the film (instead of pulling from letterboxd)
+    # @param events - block of user defined events
+    def initialize(url, *details, &events)
       @url = url
       @pulled = false
+      @pulling = false
+      @events = {}
 
-      details.each do |key, value|
-        define_singleton_method(key, lambda{value})
+      # assign each detail to a method
+      details.each do |detail|
+        detail.each do |key, value|
+
+          # only assign valid attributes to a film
+          if @@valid_attributes.include? key
+            define_singleton_method(key, lambda{value})
+          else
+            puts "Error: trying to assign invalid film data | film: #{@url}, attribute: #{key}"
+          end
+
+        end
       end
-      @callbacks = callbacks
+
+      # assign events to film object
+      if block_given?
+        instance_eval(&events)
+      end
+    end
+
+    # Assign events to instance
+    #
+    # @param event - symbol of event to be triggered
+    # @param block - user defined function to be triggered on event
+    def on(event, &block)
+      if block_given?
+        if (@@valid_events.include? event)
+          define_singleton_method(event, block)
+        else
+          puts "Error: trying to assign invalid event | Letteropend::Film, event: #{event}"
+        end
+      end
+    end
+
+    def self.config(&events)
+      if block_given?
+        class_eval(&events)
+      end
+    end
+
+    # Assign events to class
+    #
+    # @param event - symbol of event to be triggered
+    # @param block - user defined function to be triggered on event
+    def self.on(event, &block)
+      if block_given?
+        if (@@valid_events.include? event)
+          define_method(event, block)
+        else
+          puts "Error: trying to assign invalid class event | Letteropend::Film, event: #{event}"
+        end
+      end
     end
 
     def pull_data
-      if @callbacks[:pulling_film]
-        @callbacks[:pulling_film].call(self)
-      end
-  
+      @pulling = true
+
+      model_updating
+
       # pull the page from the url
-      page = Nokogiri::HTML(open("http://www.letterboxd.com#{@url}"))
-      @pulled = true
+      page = Nokogiri::HTML(open("http://www.letterboxd.com/film/#{@url}/"))
   
       # get the title for the film
       title = page.css("h1.film-title").text
@@ -44,9 +102,10 @@ module Letteropend
       overview = page.css("div.truncate").text.strip
       define_singleton_method(:overview, lambda{overview})
   
-      if @callbacks[:pulled_film]
-        @callbacks[:pulled_film].call(self)
-      end
+      @pulled = true
+      @pulling = false
+
+      model_updated
     end
   
     def ==(film)
@@ -54,9 +113,15 @@ module Letteropend
     end
 
     def method_missing(sym, *args)
-      if ([:title, :tagline, :overview, :runtime].include? sym) and !@pulled
-        pull_data
-        self.send(sym)
+      if (@@valid_attributes.include? sym)
+        if !@pulled and !@pulling
+          pull_data
+          self.send(sym)
+        elsif !@pulled and @pulling
+          puts "Error: trying to get film data prematurely | film: #{@url}, method: #{sym}"
+        end
+      elsif (@@valid_events.include? sym)
+        # no method was defined for this event
       else
         super
       end

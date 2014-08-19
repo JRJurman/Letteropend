@@ -1,14 +1,31 @@
 require_relative "../lib/letteropend"
 
-alert = {
-  :pulling_film => proc{ puts "PULLING NOW!" }
-}
+Letteropend::Film.config do
+  on :model_updated do
+    puts "Model was updated"
+  end
+end
 
-url = "/film/chopping-mall/"
-a = Letteropend::Film.new(url, {}, alert)
+url = "chopping-mall"
+a = Letteropend::Film.new url do 
+  on :model_updating do
+    puts "Runtime: #{runtime}"
+  end
+end
 
-url = "/film/ghostbusters/"
-b = Letteropend::Film.new(url, {:title=>"The Real Ghostbusters", :runtime=>107}, alert)
+url = "ghostbusters"
+b = Letteropend::Film.new url, title: "The Real Ghostbusters", runtime: 107 do
+  on :model_updating do
+    puts "Runtime: #{runtime}"
+  end
+end
+
+url = "duck-soup-1933"
+c = Letteropend::Film.new url do
+  on :model_updated do
+    puts "We have Duck Soup"
+  end
+end
 
 def we_got_movie_sign(movie)
   puts "The title is : #{movie.title}"
@@ -26,5 +43,4 @@ end
 
 we_got_movie_sign(a)
 we_got_movie_sign(b)
-
-
+we_got_movie_sign(c)
