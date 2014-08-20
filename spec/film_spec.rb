@@ -4,11 +4,39 @@ describe Letteropend::Film do
   let(:film) { Letteropend::Film.new 'chopping-mall' }
 
   describe '.new' do
-    it('defines @title') { expect(film.title).to eq 'Chopping Mall' }
+    let(:expected_url) { 'http://letterboxd.com/film/chopping-mall/' }
 
-    it('defines @slug') { expect(film.slug).to eq 'chopping-mall' }
+    context('when given a slug') do
+      let(:film) { Letteropend::Film.new 'chopping-mall' }
 
-    it('defines @url') { expect(film.url).to eq 'http://letterboxd.com/film/chopping-mall/' }
+      it('defines @title') { expect(film.title).to eq 'Chopping Mall' }
+      it('defines @slug') { expect(film.slug).to eq 'chopping-mall' }
+      it('defines @url') { expect(film.url).to eq expected_url }
+    end
+
+    context('when given a path') do
+      let(:film) { Letteropend::Film.new '/film/chopping-mall/' }
+
+      it('defines @title') { expect(film.title).to eq 'Chopping Mall' }
+      it('defines @slug') { expect(film.slug).to eq 'chopping-mall' }
+      it('defines @url') { expect(film.url).to eq expected_url }
+    end
+
+    context('when given a URL without a protocol') do
+      let(:film) { Letteropend::Film.new 'letterboxd.com/film/chopping-mall/' }
+
+      it('defines @title') { expect(film.title).to eq 'Chopping Mall' }
+      it('defines @slug') { expect(film.slug).to eq 'chopping-mall' }
+      it('defines @url') { expect(film.url).to eq expected_url }
+    end
+
+    context('when given a full URL') do
+      let(:film) { Letteropend::Film.new 'http://letterboxd.com/film/chopping-mall/' }
+
+      it('defines @title') { expect(film.title).to eq 'Chopping Mall' }
+      it('defines @slug') { expect(film.slug).to eq 'chopping-mall' }
+      it('defines @url') { expect(film.url).to eq expected_url }
+    end
   end
 
   describe '#runtime' do
