@@ -6,14 +6,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-Lint/Loop:
-  Enabled: false
-
-# Offense count: 3
-Lint/UselessAssignment:
-  Enabled: false
-
-# Offense count: 1
 Metrics/CyclomaticComplexity:
   Max: 7
 
@@ -42,27 +34,4 @@ Style/Documentation:
 # Offense count: 14
 # Configuration parameters: AllowedVariables.
 Style/GlobalVars:
-  Enabled: false
-
-# Offense count: 4
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Enabled: false
-
-# Offense count: 5
-# Configuration parameters: MaxLineLength.
-Style/IfUnlessModifier:
-  Enabled: false
-
-# Offense count: 5
-Style/Lambda:
-  Enabled: false
-
-# Offense count: 1
-Style/OpMethod:
-  Enabled: false
-
-# Offense count: 3
-# Configuration parameters: MaxSlashes.
-Style/RegexpLiteral:
   Enabled: false

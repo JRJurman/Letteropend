@@ -25,7 +25,7 @@ module Letteropend
 
         # only assign valid attributes to a film
         if @@valid_attributes.include? key
-          define_singleton_method(key, lambda { value })
+          define_singleton_method(key, -> { value })
         else
           puts "Error: trying to assign invalid film data | film: #{@slug}, attribute: #{key}"
         end
@@ -33,9 +33,7 @@ module Letteropend
       end
 
       # assign events to film object
-      if block_given?
-        instance_eval(&events)
-      end
+      instance_eval(&events) if block_given?
     end
 
     # Assign events to instance
@@ -43,12 +41,12 @@ module Letteropend
     # @param event - symbol of event to be triggered
     # @param block - user defined function to be triggered on event
     def on(event, &block)
-      if block_given?
-        if @@valid_events.include? event
-          define_singleton_method(event, block)
-        else
-          puts "Error: trying to assign invalid event | Letteropend::Film, event: #{event}"
-        end
+      return unless block_given?
+
+      if @@valid_events.include? event
+        define_singleton_method(event, block)
+      else
+        puts "Error: trying to assign invalid event | Letteropend::Film, event: #{event}"
       end
     end
 
@@ -56,9 +54,7 @@ module Letteropend
     #
     # @param events - block of user defined events
     def self.config(&events)
-      if block_given?
-        class_eval(&events)
-      end
+      class_eval(&events) if block_given?
     end
 
     # Assign events to class
@@ -86,7 +82,7 @@ module Letteropend
 
       # get the title for the film
       title = page.css('h1.film-title').text
-      define_singleton_method(:title, lambda { title })
+      define_singleton_method(:title, -> { title })
 
       # get the runtime for the film
       runtime_cap = page.css('.text-link').text.match(/(\d+) mins/)
@@ -95,15 +91,15 @@ module Letteropend
       else
         runtime = 0
       end
-      define_singleton_method(:runtime, lambda { runtime })
+      define_singleton_method(:runtime, -> { runtime })
 
       # get the tagline for the film
       tagline = page.css('.tagline').text
-      define_singleton_method(:tagline, lambda { tagline })
+      define_singleton_method(:tagline, -> { tagline })
 
       # get the overview for the film
       overview = page.css('div.truncate').text.strip
-      define_singleton_method(:overview, lambda { overview })
+      define_singleton_method(:overview, -> { overview })
 
       @pulled = true
       @pulling = false
@@ -112,8 +108,8 @@ module Letteropend
     end
 
     # Equivalence operator
-    def ==(film)
-      @slug == film.slug
+    def ==(other)
+      @slug == other.slug
     end
 
     # Method Missing implementation

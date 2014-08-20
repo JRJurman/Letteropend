@@ -32,14 +32,8 @@ end
 
 def we_got_movie_sign(movie)
   puts "The title is : #{movie.title}"
-
-  runtime = movie.runtime
   puts "#{movie.title}'s runtime is: #{movie.runtime} minutes"
-
-  tagline = movie.tagline
   puts "#{movie.title}'s tagline is: #{movie.tagline}"
-
-  overview = movie.overview
   puts "#{movie.title}'s overview is: #{movie.overview}"
   puts "\n\n"
 end

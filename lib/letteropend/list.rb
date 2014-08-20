@@ -21,11 +21,9 @@ module Letteropend
       @pages = ["/#{username}/#{list}/page/1/"]
 
       # assign events to list object
-      if block_given?
-        instance_eval(&events)
-      end
+      instance_eval(&events) if block_given?
 
-      begin
+      loop do
         # get page using Nokogiri
         new_page
 
@@ -35,17 +33,19 @@ module Letteropend
         page.css('.poster').each do |film|
           title = film.css('.frame-title').text
           url_full = film.css('a')[0].attr('href')
-          url = /\/film\/(\S+)\//.match(url_full).captures[0]
+          url = %r{/film/(\S+)/}.match(url_full).captures[0]
           @films.push(Film.new(url, title: title))
           new_film
         end
 
         # see if there is a next page
         next_page = page.css('a.paginate-next')[0]
-        if  next_page
+        if next_page
           @pages.push(next_page.attr('href'))
+        else
+          break
         end
-      end while ( next_page)
+      end
     end
 
     # Assign events to instance
@@ -53,12 +53,12 @@ module Letteropend
     # @param event - symbol of event to be triggered
     # @param block - user defined function to be triggered on event
     def on(event, &block)
-      if block_given?
-        if @@valid_events.include? event
-          define_singleton_method(event, block)
-        else
-          puts "Error: trying to assign invalid event | Letteropend::List, event: #{event}"
-        end
+      return unless block_given?
+
+      if @@valid_events.include? event
+        define_singleton_method(event, block)
+      else
+        puts "Error: trying to assign invalid event | Letteropend::List, event: #{event}"
       end
     end
 
@@ -66,9 +66,7 @@ module Letteropend
     #
     # @param events - block of user defined events
     def self.config(&events)
-      if block_given?
-        class_eval(&events)
-      end
+      class_eval(&events) if block_given?
     end
 
     # Assign events to class
@@ -76,21 +74,19 @@ module Letteropend
     # @param event - symbol of event to be triggered
     # @param block - user defined function to be triggered on event
     def self.on(event, &block)
-      if block_given?
-        if @@valid_events.include? event
-          define_method(event, block)
-        else
-          puts "Error: trying to assign invalid class event | Letteropend::List, event: #{event}"
-        end
+      return unless block_given?
+
+      if @@valid_events.include? event
+        define_method(event, block)
+      else
+        puts "Error: trying to assign invalid class event | Letteropend::List, event: #{event}"
       end
     end
 
     def method_missing(sym, *args)
-      if @@valid_events.include? sym
-        # no method was defined for this event
-      else
-        super
-      end
+      return unless @@valid_events.include? sym # return if no method was defined for this event
+
+      super
     end
   end
 end
