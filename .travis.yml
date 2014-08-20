@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+  - 2.1.2
+addons:
+  code_climate:
+    repo_token: 610596056caa2d5881d44c2c23a2a7173e7dcc8e0cd7563351b93444eeec6b29
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/caa91aae70773d49e39e
+    on_success: change  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: false     # default: false
