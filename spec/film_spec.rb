@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Letteropend::Film do
-  let(:film) { Letteropend::Film.new 'Chopping Mall', '/film/chopping-mall/' }
+  let(:film) { Letteropend::Film.new 'chopping-mall' }
 
   describe '.new' do
     it('defines @title') { expect(film.title).to eq 'Chopping Mall' }
