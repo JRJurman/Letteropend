@@ -5,10 +5,15 @@ un = gets().chomp
 print "Enter list: "
 ul = gets().chomp
 
-callbacks = {
-  :new_page => lambda{ |l| puts "pulling data from " + l.pages.last},
-}
+Letteropend::List.config do
+  on :new_page do
+    puts "Loading "+ pages.last
+  end
+  on :new_film do
+    puts "Got "+films.last.url
+  end
+end
 
-l = Letteropend::List.new(un, ul, callbacks)
+l = Letteropend::List.new(un, ul)
 
 puts "There are #{l.films.length} number of films on #{un}'s #{ul} list"
