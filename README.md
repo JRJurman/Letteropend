@@ -1,4 +1,4 @@
-LetterOpend
+Letteropend
 ===========
 
 [![Gem Version](https://badge.fury.io/rb/letteropend.svg)](http://badge.fury.io/rb/letteropend)
