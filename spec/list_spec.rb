@@ -7,8 +7,4 @@ describe Letteropend::List do
     it 'assigns @films'
     it 'assigns @pages'
   end
-
-  describe '#get_total_time' do
-    it 'returns the total time of all films'
-  end
 end
