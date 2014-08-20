@@ -1,9 +1,12 @@
+# Usage: ruby getNumberOfFilms.rb <username> <list>
+
 require_relative "../lib/letteropend"
 
-print "Enter username: "
-un = gets().chomp
-print "Enter list: "
-ul = gets().chomp
+# Username
+un = ARGV[0]
+
+# List
+ul = ARGV[1]
 
 Letteropend::List.config do
   on :new_page do

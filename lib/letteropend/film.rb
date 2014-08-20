@@ -4,33 +4,32 @@ require "open-uri"
 module Letteropend
   # The Film class
   class Film
-    attr_reader :url
+    attr_reader :slug, :url
     @@valid_attributes = [:title, :tagline, :overview, :runtime]
     @@valid_events = [:model_updated, :model_updating]
 
     # Creates a new film instance
     #
-    # @param url - the url letterboxd assigns the film
+    # @param id - the title letterboxd assigns the film for the url
     # @param details - the attributes the user assigns the film (instead of pulling from letterboxd)
     # @param events - block of user defined events
-    def initialize(url, *details, &events)
-      @url = url
+    def initialize(slug, details={}, &events)
+      @slug = slug.split("/").last
+      @url = "http://letterboxd.com/film/#{@slug}/"
       @pulled = false
       @pulling = false
       @events = {}
 
       # assign each detail to a method
-      details.each do |detail|
-        detail.each do |key, value|
+      details.each do |key, value|
 
-          # only assign valid attributes to a film
-          if @@valid_attributes.include? key
-            define_singleton_method(key, lambda{value})
-          else
-            puts "Error: trying to assign invalid film data | film: #{@url}, attribute: #{key}"
-          end
-
+        # only assign valid attributes to a film
+        if @@valid_attributes.include? key
+          define_singleton_method(key, lambda{value})
+        else
+          puts "Error: trying to assign invalid film data | film: #{@slug}, attribute: #{key}"
         end
+
       end
 
       # assign events to film object
@@ -83,7 +82,7 @@ module Letteropend
       model_updating
 
       # pull the page from the url
-      page = Nokogiri::HTML(open("http://www.letterboxd.com/film/#{@url}/"))
+      page = Nokogiri::HTML(open(@url))
   
       # get the title for the film
       title = page.css("h1.film-title").text
@@ -114,7 +113,7 @@ module Letteropend
   
     # Equivalence operator
     def ==(film)
-      @url == film.url
+      @slug == film.slug
     end
 
     # Method Missing implementation
@@ -127,7 +126,7 @@ module Letteropend
           pull_data
           self.send(sym)
         elsif !@pulled and @pulling
-          puts "Error: trying to get film data prematurely | film: #{@url}, method: #{sym}"
+          puts "Error: trying to get film data prematurely | film: #{@slug}, method: #{sym}"
         end
       elsif (@@valid_events.include? sym)
         # no method was defined for this event
