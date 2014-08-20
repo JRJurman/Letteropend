@@ -1,3 +1,5 @@
+# Usage: ruby compareWatchlist.rb <username 1> <username 2>
+
 require_relative "../lib/letteropend"
 
 Letteropend::List.config do
@@ -6,11 +8,11 @@ Letteropend::List.config do
   end
 end
 
-print "First username: "
-user1 = gets.chomp
+# First username
+user1 = ARGV[0]
 
-print "Second username: "
-user2 = gets.chomp
+# Second username
+user2 = ARGV[1]
 
 user1_wl = Letteropend::List.new(user1, "watchlist")
 user2_wl = Letteropend::List.new(user2, "watchlist")
