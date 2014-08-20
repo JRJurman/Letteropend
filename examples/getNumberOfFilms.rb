@@ -1,6 +1,6 @@
 # Usage: ruby getNumberOfFilms.rb <username> <list>
 
-require_relative "../lib/letteropend"
+require_relative '../lib/letteropend'
 
 # Username
 un = ARGV[0]
@@ -10,10 +10,10 @@ ul = ARGV[1]
 
 Letteropend::List.config do
   on :new_page do
-    puts "Loading "+ pages.last
+    puts 'Loading ' + pages.last
   end
   on :new_film do
-    puts "Got "+films.last.url
+    puts 'Got ' + films.last.url
   end
 end
 

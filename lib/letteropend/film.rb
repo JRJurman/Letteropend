@@ -1,5 +1,5 @@
-require "nokogiri"
-require "open-uri"
+require 'nokogiri'
+require 'open-uri'
 
 module Letteropend
   # The Film class
@@ -13,8 +13,8 @@ module Letteropend
     # @param id - the title letterboxd assigns the film for the url
     # @param details - the attributes the user assigns the film (instead of pulling from letterboxd)
     # @param events - block of user defined events
-    def initialize(slug, details={}, &events)
-      @slug = slug.split("/").last
+    def initialize(slug, details = {}, &events)
+      @slug = slug.split('/').last
       @url = "http://letterboxd.com/film/#{@slug}/"
       @pulled = false
       @pulling = false
@@ -25,7 +25,7 @@ module Letteropend
 
         # only assign valid attributes to a film
         if @@valid_attributes.include? key
-          define_singleton_method(key, lambda{value})
+          define_singleton_method(key, lambda { value })
         else
           puts "Error: trying to assign invalid film data | film: #{@slug}, attribute: #{key}"
         end
@@ -44,7 +44,7 @@ module Letteropend
     # @param block - user defined function to be triggered on event
     def on(event, &block)
       if block_given?
-        if (@@valid_events.include? event)
+        if @@valid_events.include? event
           define_singleton_method(event, block)
         else
           puts "Error: trying to assign invalid event | Letteropend::Film, event: #{event}"
@@ -67,7 +67,7 @@ module Letteropend
     # @param block - user defined function to be triggered on event
     def self.on(event, &block)
       if block_given?
-        if (@@valid_events.include? event)
+        if @@valid_events.include? event
           define_method(event, block)
         else
           puts "Error: trying to assign invalid class event | Letteropend::Film, event: #{event}"
@@ -83,34 +83,34 @@ module Letteropend
 
       # pull the page from the url
       page = Nokogiri::HTML(open(@url))
-  
+
       # get the title for the film
-      title = page.css("h1.film-title").text
-      define_singleton_method(:title, lambda{title})
+      title = page.css('h1.film-title').text
+      define_singleton_method(:title, lambda { title })
 
       # get the runtime for the film
-      runtime_cap = page.css(".text-link").text.match(/(\d+) mins/)
+      runtime_cap = page.css('.text-link').text.match(/(\d+) mins/)
       if runtime_cap
         runtime = runtime_cap.captures[0].to_i
       else
         runtime = 0
       end
-      define_singleton_method(:runtime, lambda{runtime})
+      define_singleton_method(:runtime, lambda { runtime })
 
       # get the tagline for the film
-      tagline = page.css(".tagline").text
-      define_singleton_method(:tagline, lambda{tagline})
+      tagline = page.css('.tagline').text
+      define_singleton_method(:tagline, lambda { tagline })
 
       # get the overview for the film
-      overview = page.css("div.truncate").text.strip
-      define_singleton_method(:overview, lambda{overview})
-  
+      overview = page.css('div.truncate').text.strip
+      define_singleton_method(:overview, lambda { overview })
+
       @pulled = true
       @pulling = false
 
       model_updated
     end
-  
+
     # Equivalence operator
     def ==(film)
       @slug == film.slug
@@ -121,19 +121,18 @@ module Letteropend
     # @param sym - method trying to be called
     # @param args - arguments passed into the method call
     def method_missing(sym, *args)
-      if (@@valid_attributes.include? sym)
-        if !@pulled and !@pulling
+      if @@valid_attributes.include? sym
+        if !@pulled && !@pulling
           pull_data
-          self.send(sym)
-        elsif !@pulled and @pulling
+          send(sym)
+        elsif !@pulled && @pulling
           puts "Error: trying to get film data prematurely | film: #{@slug}, method: #{sym}"
         end
-      elsif (@@valid_events.include? sym)
+      elsif @@valid_events.include? sym
         # no method was defined for this event
       else
         super
       end
     end
-
   end
 end
