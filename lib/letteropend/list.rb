@@ -58,7 +58,8 @@ module Letteropend
       if VALID_EVENTS.include? event
         define_singleton_method(event, block)
       else
-        puts "Error: trying to assign invalid event | Letteropend::List, event: #{event}"
+        puts 'Error: trying to assign invalid event | Letteropend::List, ' \
+             "event: #{event}"
       end
     end
 
@@ -79,12 +80,14 @@ module Letteropend
       if VALID_EVENTS.include? event
         define_method(event, block)
       else
-        puts "Error: trying to assign invalid class event | Letteropend::List, event: #{event}"
+        puts 'Error: trying to assign invalid class event | ' \
+             "Letteropend::List, event: #{event}"
       end
     end
 
     def method_missing(sym, *args)
-      return unless VALID_EVENTS.include? sym # return if no method was defined for this event
+      # return if no method was defined for this event
+      return unless VALID_EVENTS.include? sym
 
       super
     end

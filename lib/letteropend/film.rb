@@ -11,7 +11,8 @@ module Letteropend
     # Creates a new film instance
     #
     # @param id - the title letterboxd assigns the film for the url
-    # @param details - the attributes the user assigns the film (instead of pulling from letterboxd)
+    # @param details - the attributes the user assigns the film (instead of
+    #   pulling from letterboxd)
     # @param events - block of user defined events
     def initialize(slug, details = {}, &events)
       @slug = slug.split('/').last
@@ -27,7 +28,8 @@ module Letteropend
         if VALID_ATTRIBUTES.include? key
           define_singleton_method(key, -> { value })
         else
-          puts "Error: trying to assign invalid film data | film: #{@slug}, attribute: #{key}"
+          puts "Error: trying to assign invalid film data | film: #{@slug}, " \
+               "attribute: #{key}"
         end
 
       end
@@ -46,7 +48,8 @@ module Letteropend
       if VALID_EVENTS.include? event
         define_singleton_method(event, block)
       else
-        puts "Error: trying to assign invalid event | Letteropend::Film, event: #{event}"
+        puts 'Error: trying to assign invalid event | Letteropend::Film, ' \
+             "event: #{event}"
       end
     end
 
@@ -66,7 +69,8 @@ module Letteropend
         if VALID_EVENTS.include? event
           define_method(event, block)
         else
-          puts "Error: trying to assign invalid class event | Letteropend::Film, event: #{event}"
+          puts 'Error: trying to assign invalid class event | ' \
+               "Letteropend::Film, event: #{event}"
         end
       end
     end
@@ -122,7 +126,8 @@ module Letteropend
           pull_data
           send(sym)
         elsif !@pulled && @pulling
-          puts "Error: trying to get film data prematurely | film: #{@slug}, method: #{sym}"
+          puts "Error: trying to get film data prematurely | film: #{@slug}, " \
+               "method: #{sym}"
         end
       elsif VALID_EVENTS.include? sym
         # no method was defined for this event

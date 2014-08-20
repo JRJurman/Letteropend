@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Jesse Jurman']
   spec.email         = ['j.r.jurman@gmail.com']
   spec.summary       = 'exposes films and lists from letterboxd.com'
-  spec.description   = 'Letteropend is a gem that exposes films and lists stored on letterboxd.com'
+  spec.description   = 'Letteropend is a gem that exposes films and lists ' \
+                       'stored on letterboxd.com'
   spec.homepage      = 'https://github.com/JRJurman/Letteropend'
   spec.license       = 'MIT'
 

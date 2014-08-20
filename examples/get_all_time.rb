@@ -16,9 +16,12 @@ def pulled_film(film)
   if $ct.to_i < 1440
     puts "That's #{$ct / 60} hours and #{$ct % 60} minutes"
   elsif $ct.to_i < 525_600
-    puts "That's #{$ct / 1440} days, #{$ct % 1440 / 60} hours, and #{$ct % 1440 % 60} minutes"
+    puts "That's #{$ct / 1440} days, #{$ct % 1440 / 60} hours, and " \
+         "#{$ct % 1440 % 60} minutes"
   else
-    puts "That's #{$ct / 525_600} years, #{$ct % 525_600 / 1440} days, #{$ct % 545_600 % 1440 / 60} hours, and #{$ct % 535_600 % 1440 % 60} minutes"
+    puts "That's #{$ct / 525_600} years, #{$ct % 525_600 / 1440} days, " \
+         "#{$ct % 545_600 % 1440 / 60} hours, and " \
+         "#{$ct % 535_600 % 1440 % 60} minutes"
   end
 end
 
