@@ -1,3 +1,6 @@
+# Usage: ruby getFilmDetails.rb
+# TODO: Allow the user to pass command line arguments
+
 require_relative "../lib/letteropend"
 
 Letteropend::Film.config do

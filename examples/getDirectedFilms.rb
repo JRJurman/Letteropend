@@ -1,3 +1,6 @@
+# Usage: ruby getDirectedFilms.rb
+# TODO: Allow the user to pass command line arguments
+
 require_relative "../lib/letteropend"
 
 puts "Looking at films directed by Alfred Hitchcock"
