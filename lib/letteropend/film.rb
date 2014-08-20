@@ -15,23 +15,21 @@ module Letteropend
     # @param events - block of user defined events
     def initialize(slug, details={}, &events)
       @slug = slug.split("/").last
-      @url = "letterboxd.com/film/#{@slug}/"
+      @url = "http://letterboxd.com/film/#{@slug}/"
       @pulled = false
       @pulling = false
       @events = {}
 
       # assign each detail to a method
-      details.each do |detail|
-        detail.each do |key, value|
+      details.each do |key, value|
 
-          # only assign valid attributes to a film
-          if @@valid_attributes.include? key
-            define_singleton_method(key, lambda{value})
-          else
-            puts "Error: trying to assign invalid film data | film: #{@slug}, attribute: #{key}"
-          end
-
+        # only assign valid attributes to a film
+        if @@valid_attributes.include? key
+          define_singleton_method(key, lambda{value})
+        else
+          puts "Error: trying to assign invalid film data | film: #{@slug}, attribute: #{key}"
         end
+
       end
 
       # assign events to film object
