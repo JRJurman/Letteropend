@@ -5,8 +5,8 @@ module Letteropend
   # The Film class
   class Film
     attr_reader :slug, :url
-    @@valid_attributes = [:title, :tagline, :overview, :runtime]
-    @@valid_events = [:model_updated, :model_updating]
+    VALID_ATTRIBUTES = [:title, :tagline, :overview, :runtime]
+    VALID_EVENTS = [:model_updated, :model_updating]
 
     # Creates a new film instance
     #
@@ -24,7 +24,7 @@ module Letteropend
       details.each do |key, value|
 
         # only assign valid attributes to a film
-        if @@valid_attributes.include? key
+        if VALID_ATTRIBUTES.include? key
           define_singleton_method(key, -> { value })
         else
           puts "Error: trying to assign invalid film data | film: #{@slug}, attribute: #{key}"
@@ -43,7 +43,7 @@ module Letteropend
     def on(event, &block)
       return unless block_given?
 
-      if @@valid_events.include? event
+      if VALID_EVENTS.include? event
         define_singleton_method(event, block)
       else
         puts "Error: trying to assign invalid event | Letteropend::Film, event: #{event}"
@@ -63,7 +63,7 @@ module Letteropend
     # @param block - user defined function to be triggered on event
     def self.on(event, &block)
       if block_given?
-        if @@valid_events.include? event
+        if VALID_EVENTS.include? event
           define_method(event, block)
         else
           puts "Error: trying to assign invalid class event | Letteropend::Film, event: #{event}"
@@ -117,14 +117,14 @@ module Letteropend
     # @param sym - method trying to be called
     # @param args - arguments passed into the method call
     def method_missing(sym, *args)
-      if @@valid_attributes.include? sym
+      if VALID_ATTRIBUTES.include? sym
         if !@pulled && !@pulling
           pull_data
           send(sym)
         elsif !@pulled && @pulling
           puts "Error: trying to get film data prematurely | film: #{@slug}, method: #{sym}"
         end
-      elsif @@valid_events.include? sym
+      elsif VALID_EVENTS.include? sym
         # no method was defined for this event
       else
         super

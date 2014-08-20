@@ -6,7 +6,7 @@ module Letteropend
   # The List class
   class List
     attr_reader :username, :list, :films, :pages
-    @@valid_events = [:new_page, :new_film]
+    VALID_EVENTS = [:new_page, :new_film]
 
     # Created a new list instance
     #
@@ -55,7 +55,7 @@ module Letteropend
     def on(event, &block)
       return unless block_given?
 
-      if @@valid_events.include? event
+      if VALID_EVENTS.include? event
         define_singleton_method(event, block)
       else
         puts "Error: trying to assign invalid event | Letteropend::List, event: #{event}"
@@ -76,7 +76,7 @@ module Letteropend
     def self.on(event, &block)
       return unless block_given?
 
-      if @@valid_events.include? event
+      if VALID_EVENTS.include? event
         define_method(event, block)
       else
         puts "Error: trying to assign invalid class event | Letteropend::List, event: #{event}"
@@ -84,7 +84,7 @@ module Letteropend
     end
 
     def method_missing(sym, *args)
-      return unless @@valid_events.include? sym # return if no method was defined for this event
+      return unless VALID_EVENTS.include? sym # return if no method was defined for this event
 
       super
     end
