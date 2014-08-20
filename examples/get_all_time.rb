@@ -1,4 +1,4 @@
-# Usage: ruby getAllTime.rb <username> <list>
+# Usage: ruby get_all_time.rb <username> <list>
 
 require_relative '../lib/letteropend'
 

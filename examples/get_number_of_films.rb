@@ -1,4 +1,4 @@
-# Usage: ruby getNumberOfFilms.rb <username> <list>
+# Usage: ruby get_number_of_films.rb <username> <list>
 
 require_relative '../lib/letteropend'
 

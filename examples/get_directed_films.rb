@@ -1,4 +1,4 @@
-# Usage: ruby getDirectedFilms.rb
+# Usage: ruby get_directed_films.rb
 # TODO: Allow the user to pass command line arguments
 
 require_relative '../lib/letteropend'

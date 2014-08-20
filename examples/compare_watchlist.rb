@@ -1,4 +1,4 @@
-# Usage: ruby compareWatchlist.rb <username 1> <username 2>
+# Usage: ruby compare_watchlist.rb <username 1> <username 2>
 
 require_relative '../lib/letteropend'
 
