@@ -6,7 +6,9 @@ describe Letteropend::Film do
   describe '.new' do
     it('defines @title') { expect(film.title).to eq 'Chopping Mall' }
 
-    it('defines @url') { expect(film.url).to eq '/film/chopping-mall/' }
+    it('defines @slug') { expect(film.slug).to eq 'chopping-mall' }
+
+    it('defines @url') { expect(film.url).to eq 'http://letterboxd.com/film/chopping-mall/' }
   end
 
   describe '#runtime' do
@@ -36,25 +38,15 @@ describe Letteropend::Film do
   end
 
   describe '#==' do
-    let(:same_film) { Letteropend::Film.new 'Chopping Mall', '/film/chopping-mall/' }
-    let(:different_film) { Letteropend::Film.new 'Paul Blart: Mall Cop', '/film/paul-blart-mall-cop/' }
-    let(:different_name_film) { Letteropend::Film.new 'Paul Blart: Mall Cop', '/film/chopping-mall/' }
-    let(:different_url_film) { Letteropend::Film.new 'Chopping Mall', '/film/paul-blart-mall-cop/' }
+    let(:chopping_mall) { Letteropend::Film.new 'chopping-mall' }
+    let(:mall_cop) { Letteropend::Film.new 'paul-blart-mall-cop' }
 
-    context 'with the same film' do
-      it { expect(film == same_film).to be true }
+    context 'with a Film with the same slug' do
+      it { expect(film == chopping_mall).to be true }
     end
 
-    context 'with a different film' do
-      it { expect(film == different_film).to be false }
-    end
-
-    context 'with a film with a different name' do
-      it { expect(film == different_name_film).to be false }
-    end
-
-    context 'with a film with a different url' do
-      it { expect(film == different_url_film).to be false }
+    context 'with a Film with a different slug' do
+      it { expect(film == mall_cop).to be false }
     end
   end
 end
